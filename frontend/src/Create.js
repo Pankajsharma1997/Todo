@@ -13,16 +13,17 @@ function Create() {
        axios.post('http://localhost:3001/add',{task:task})
        .then(result =>{console.log(result); // it print the result in the console  
 
-        window.location.reload(); }  ) // After submit the data page is refresh 
+        window.location.reload(); }  ) // After submit the data page is reload 
 
-       .catch(err => console.log(err)) // if any error occurs it shows the error  in the console 
+       .catch(err => console.log(err)) // if any error occurs it show the error  in the console 
     }
   return (
     
     <div>
            <h2> Add Todo </h2>
-        <div className='container mt-2 border border-danger rounded-pill'> 
+        <div className='container mt-2 border border-danger rounded-pill  bg-light text-white'> 
            <input type="text" placeholder='Enter the Todo' className='form-control mt-5  me-4 rounded-pill sm'   onChange={(e)=> setTask(e.target.value)} /> 
+           
            <button  onClick={handleAdd} className="btn btn-success btn-md m-5">Add Todo</button>
          </div>
     

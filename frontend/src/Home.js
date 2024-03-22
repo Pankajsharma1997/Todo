@@ -7,8 +7,10 @@ import Create from './Create';
 
 
 function Home() {
-
-    const [todos, setTodos] = useState([]); // todos, setTodos array is used for store the todos that fetch from the db 
+ // todos, setTodos array is used for store the todos that fetch from the db 
+    const [todos, setTodos] = useState([]);
+      const [editableId, setEditableId] = useState(null); 
+      const [editedTask, setEditedTask] = useState(""); 
 
 
     // show all the data from the database in to the Front page 
@@ -32,7 +34,43 @@ function Home() {
               console.log(err) 
           ) 
   }
+
+   // Function to toggle the editable state for a specific row 
+   const toggleEditable = (id) => { 
+    const rowData = todos.find((todo) => todo._id === id); 
+    if (rowData) { 
+        setEditableId(id); 
+        setEditedTask(rowData.task); 
+  
+    } else { 
+        setEditableId(null); 
+        setEditedTask(""); 
    
+    } 
+}; 
+
+    // Function to save edited data to the database 
+    const saveEditedTask = (id) => { 
+      const editedData = { 
+          task: editedTask, 
+      }; 
+
+      // If the fields are empty 
+      if (!editedTask) { 
+          alert("All fields must be filled out."); 
+          return; 
+      } 
+      // Updating edited data to the database through updateById API 
+      axios.post('http://127.0.0.1:3001/updateTodoList/' + id, editedData) 
+      .then(result => { 
+          console.log(result); 
+          setEditableId(null); 
+          setEditedTask(""); 
+          window.location.reload(); 
+      }) 
+      .catch(err => console.log(err)); 
+} 
+
   return (
      <div className='container mt-5' >
       <div className='row'> 
@@ -66,11 +104,34 @@ function Home() {
               todos.map(todo =>(
                 
                 <tr key = {todo._id}> 
-                <td>{todo.task}  </td>
-                <td><button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(todo._id)}> 
+                
+                <td>
+                {editableId === todo._id ? ( 
+                                                    <input 
+                                                        type="text"
+                                                        className="form-control"
+                                                        value={editedTask} 
+                                                        onChange={(e) => setEditedTask(e.target.value)} 
+                                                    /> 
+                                                ) : ( 
+                                                    todo.task 
+                                                )}
+                  </td>
+             
+               <td> 
+                                                {editableId === todo._id ? ( 
+                                                    <button className="btn btn-success btn-sm me-3" onClick={() => saveEditedTask(todo._id)}> 
+                                                        Save 
+                                                    </button> 
+                                                ) : ( 
+                                                    <button className="btn btn-primary btn-sm me-3" onClick={() => toggleEditable(todo._id)}> 
+                                                        Edit 
+                                                    </button> 
+                                                )} 
+                                                <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(todo._id)}> 
                                                     Delete 
-                                                </button>   </td>
-              
+                                                </button> 
+                                            </td> 
              </tr>
               ))
             }

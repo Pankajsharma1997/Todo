@@ -30,7 +30,17 @@ const task = req.body.task;
  .then(result =>res.json(result) )
  .catch(err => res.json(err))
 })
-
+// Update task fields (including deadline) 
+app.post("/updateTodoList/:id", (req, res) => { 
+  const id = req.params.id; 
+  const updateData = { 
+      task: req.body.task, 
+ 
+  }; 
+  TodoModel.findByIdAndUpdate(id, updateData) 
+      .then((todo) => res.json(todo)) 
+      .catch((err) => res.json(err)); 
+}); 
  
 
 // Delete task from the database 
