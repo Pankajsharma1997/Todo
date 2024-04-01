@@ -2,6 +2,8 @@ import React from 'react'
 import {useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 /* 
 Create a functional Component for Add The todo in the db 
 */
@@ -9,11 +11,11 @@ function Create() {
 
     const [task, setTask]= useState(""); 
     const [newStatus, setStatus] = useState("");
-    const [date,setDate]  = useState("");
+    const [startDate,setStartDate]  = useState( );
     const [name,setName] = useState("");
   // handleAdd function is used for submit the data in the database with the help of the Add Todo button 
     const handleAdd = () =>{
-       axios.post('http://localhost:3001/add',{task:task, status:newStatus, date:date, name:name })
+       axios.post('http://localhost:3001/add',{task:task, status:newStatus, date:startDate, name:name })
        .then(result =>{console.log(result); // it print the result in the console  
 
         window.location.reload(); }  ) // After submit the data page is reload 
@@ -47,11 +49,22 @@ function Create() {
         </div>
 
         {/* Date */}
-        <div> 
+        {/* <div> 
           <label className='mt-3 text-end'> Date </label>
           <input type = "datetime-local" placeholder='choose Date' className='form-control mt-3 me-4 rounded-pill sm'
-           onChange={(e)=> setDate(e.target.value) }/>
-        </div>
+           onChange={(e)=> setStartDate(e.target.value) }/>
+        </div> */}
+
+        <div> 
+  <label className='mt-3 text-end'> Date </label>
+       <DatePicker
+        showIcon
+      selected={startDate}
+      isClearable
+      placeholderText="Select the Date"
+      onChange={(date) => setStartDate(date)}
+    />
+    </div>
            <button  onClick={handleAdd} className="btn btn-success btn-md m-5">Add Todo</button>
          </div>
     
