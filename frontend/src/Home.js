@@ -154,15 +154,29 @@ const saveEditedTask = (id) => {
                   </td>
                 
                  {/*  Edit the Todo Status  */}
-                  <td> 
+                  {/* <td> 
                     {editableId === todo._id ? ( 
                                             <input type= "text" className="form-control"
                                              value={editedStatus}  onChange={(e) => setEditedStatus(e.target.value)}/> )
                                             : (todo.status)
 
-                    }
-                    
-                  </td>
+                      }
+                  </td> */}
+
+                 {/*  Edit the Todo Status  */}
+                 <td> 
+                 
+                    {editableId === todo._id ? 
+                    ( <select value ={editedStatus} onChange ={(e) => setEditedStatus(e.target.value)}> 
+                      <option value ="Pending"> Pending   </option>
+                      <option value ="In-Progress"> In-Progress </option>
+                      <option value ="Completed"> Completed  </option>
+
+                    </select> ):(todo.status)
+                }
+                 </td>
+
+
                   {/*  Edit the Date and Time */}
                   <td>  
                     {editableId === todo._id ? (
