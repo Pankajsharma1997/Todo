@@ -2,6 +2,8 @@ import React from 'react';
 import {useState,useEffect} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import Create from './Create';
 
 
@@ -14,7 +16,7 @@ function Home() {
       const [editedName, setEditedName] = useState(" ");
       const [editedTask, setEditedTask] = useState(""); 
       const [editedStatus, setEditedStatus] = useState("");
-      const [editedDate, setEditedDate]   = useState("");
+      const [editedDate, setEditedDate]   = useState(new Date());
 
 
     // Show all the data from the database in to the Front page 
@@ -178,7 +180,7 @@ const saveEditedTask = (id) => {
 
 
                   {/*  Edit the Date and Time */}
-                  <td>  
+                  {/* <td>  
                     {editableId === todo._id ? (
                                             <input type = "datetime-local"
                                              className="form-control" 
@@ -187,8 +189,22 @@ const saveEditedTask = (id) => {
                                              ? new Date(todo.date).toLocaleString() : ''
 
                     )}
-                  </td>
+                  </td> */}
+
+                  { /* Edit  the Date */}
+                  { editableId === todo._id ? (
+                     <DatePicker 
+                         showIcon
+                         selected ={editedDate} 
+                         isClearable
+                         placeholderText='Select the new date'
+                         dateFormat="MMMM d, yyyy"
+                         onChange={(date) => setEditedDate(date)}
+                  /> ) 
+                  :(todo.date? new Date(todo.date).toDateString():'')}
              
+
+
                <td> 
                                                 {editableId === todo._id ? ( 
                                                     <button className="btn btn-success btn-sm me-2 " onClick={() => saveEditedTask(todo._id)}> 
