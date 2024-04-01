@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Create from './Create';
+import Form from 'react-bootstrap/Form';
 
 
 
@@ -134,7 +135,7 @@ const saveEditedTask = (id) => {
                 <tr key = {todo._id}> 
                 {/* Edit the Todo cliet Name  */}
                 <td> 
-                    {editableId === todo._id ? (<input type ="text" className ="form-control" value={editedName} 
+                    {editableId === todo._id ? (<Form.Control type ="text" className ="form-control" value={editedName} 
                     onChange={(e) =>setEditedName(e.target.value)}/>)
                      : ( 
                         todo.name
@@ -144,7 +145,7 @@ const saveEditedTask = (id) => {
                  {/* Edit the Todo task */}
                 <td>
                 {editableId === todo._id ? ( 
-                                                    <input 
+                                                    <Form.Control
                                                         type="text"
                                                         className="form-control"
                                                         value={editedTask} 
@@ -198,7 +199,6 @@ const saveEditedTask = (id) => {
                          selected ={editedDate} 
                          isClearable
                          placeholderText='Select the new date'
-                         dateFormat="MMMM d, yyyy"
                          onChange={(date) => setEditedDate(date)}
                   /> ) 
                   :(todo.date? new Date(todo.date).toDateString():'')}

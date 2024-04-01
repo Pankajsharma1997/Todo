@@ -4,6 +4,8 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Form from 'react-bootstrap/Form';
+
 /* 
 Create a functional Component for Add The todo in the db 
 */
@@ -13,6 +15,7 @@ function Create() {
     const [newStatus, setStatus] = useState("");
     const [startDate,setStartDate]  = useState( );
     const [name,setName] = useState("");
+
   // handleAdd function is used for submit the data in the database with the help of the Add Todo button 
     const handleAdd = () =>{
        axios.post('http://localhost:3001/add',{task:task, status:newStatus, date:startDate, name:name })
@@ -30,23 +33,36 @@ function Create() {
         {/* Name */}
         <div> 
         <label className ='mt-5 text-start'> Client Name  </label>
-        <input type ="text" placeholder ='Client Name' className='form-control mt-3 me-4 rounded-pill sm'
-        onChange={(e)=> setName(e.target.value)} />
+        {/* <input type ="text" placeholder ='Client Name' className='form-control mt-3 me-4 rounded-pill sm'
+        onChange={(e)=> setName(e.target.value)} /> */}
+
+         <Form.Control type="text" placeholder="Client Name" onChange={(e)=> setName(e.target.value)} />
         </div>
 
         {/* Task  */}
         <div> 
-          <label className='mt-5 text-end'> Task </label>
-        <input type="text" placeholder='Enter the Todo' className='form-control mt-3  me-4 rounded-pill sm'  
-         onChange={(e)=> setTask(e.target.value)} /> 
+          <label className='mt-3 text-end'> Task </label>
+          <Form.Control type="text" placeholder="Enter the Task " onChange={(e)=> setTask(e.target.value)} />
         </div>
 
         {/* Status */}
-        <div> 
-          <label className='mt-3 text-end'> Status</label>
-        <input type="text" placeholder='Enter the Status' className='form-control  mt-3 me-4 rounded-pill sm'   
-        onChange={(e)=> setStatus(e.target.value)} /> 
-        </div>
+        {/* <div> 
+           <label className='mt-3 text-end'> Status</label>
+           <Form.Control type ="text" placeholder ="Enter the Status" onChange ={(e)=> setStatus(e.target.value)}/>
+        </div> */}
+
+
+         {/*DropDown for Status  */}
+          <div>
+          <label className="mt-3 me-3">Status</label>
+         <select select ={newStatus} onChange ={(e) => setStatus(e.target.value)}> 
+                      <option value ="Pending"> Pending   </option>
+                      <option value ="In-Progress"> In-Progress </option>
+                      <option value ="Completed"> Completed  </option>
+                    </select>
+         </div> 
+ 
+    
 
         {/* Date */}
         {/* <div> 
@@ -55,16 +71,20 @@ function Create() {
            onChange={(e)=> setStartDate(e.target.value) }/>
         </div> */}
 
+        {/* Date */}
         <div> 
-  <label className='mt-3 text-end'> Date </label>
-       <DatePicker
-        showIcon
-      selected={startDate}
-      isClearable
-      placeholderText="Select the Date"
-      onChange={(date) => setStartDate(date)}
-    />
-    </div>
+         <label className='mt-3 ms-3 '> Date </label>
+        </div> 
+
+        <div  className = 'mt-3 form-control'> 
+          <DatePicker 
+            showIcon
+              selected={startDate}
+                 isClearable
+                     placeholderText="Select the Date"
+                            onChange={(date) => setStartDate(date)}
+                />
+        </div>
            <button  onClick={handleAdd} className="btn btn-success btn-md m-5">Add Todo</button>
          </div>
     
